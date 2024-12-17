@@ -1,0 +1,18 @@
+
+services:
+  testmailserver:
+    # restart: always
+    build:
+      context: .
+      args:
+        HOSTNAME: ${HOSTNAME}
+    env_file: .env
+    ports:
+      - "4000:80"
+      - "4003:3000"
+    environment:
+      - MYSQL_HOST=mysql_db
+    stdin_open: true
+    tty: true
+    # volumes:
+    #   - ./webadmin:/webadmin
