@@ -73,6 +73,18 @@ if [ ! -f /.package-installed ]; then
         sed -i "s/____postscreenDeepProtocolTests/yes/g" /etc/postfix/main.cf
     fi
 
+    # SPF / OpenDKIM
+    # Inspired by this tutorial https://www.linuxbabe.com/mail-server/spf-dkim-postfix-debian-server
+    apt -y install postfix-policyd-spf-python opendkim opendkim-tools
+    sudo gpasswd -a postfix opendkim
+    cp -f /opt/conf/opendkim/opendkim.conf /etc/
+    mkdir -p /etc/opendkim/keys
+    chown -R opendkim:opendkim /etc/opendkim
+    chmod go-rw /etc/opendkim/keys
+    # the API must use these scripts when creating or deleting the domain
+    # - opendkim-create.sh <domain>
+    # - opendkim-delete.sh <domain>
+
     # dovecot changes
     mkdir -p /var/mail/vhosts/
     groupadd -g 5000 vmail
