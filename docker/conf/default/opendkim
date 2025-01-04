@@ -17,7 +17,7 @@ RUNDIR=/run/opendkim
 # Uncomment to specify an alternate socket
 # Note that setting this will override any Socket value in opendkim.conf
 # default:
-SOCKET="local:/var/spool/postfix/opendkim/opendkim.sock"
+SOCKET="inet:12301@localhost"
 # listen on all interfaces on port 54321:
 #SOCKET=inet:54321
 # listen on loopback on port 12345:

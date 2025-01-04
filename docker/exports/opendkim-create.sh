@@ -22,8 +22,8 @@ if [ $1 ]; then
 
     if [ ! $signingTable -eq 0 ]; then
         echo "#__DOMAIN__$1" >>$SIGNING_TABLE
-        echo "*@$1      default._domainkey.$1" >>$SIGNING_TABLE
-        echo "*@*.$1    default._domainkey.$1" >>$SIGNING_TABLE
+        echo "*@$1      mail._domainkey.$1" >>$SIGNING_TABLE
+        echo "*@*.$1    mail._domainkey.$1" >>$SIGNING_TABLE
         echo "" >>$SIGNING_TABLE
     else
         echo "Error, the domain $1 already exists in signing.table"
@@ -31,7 +31,7 @@ if [ $1 ]; then
 
     if [ ! $keyTable -eq 0 ]; then
         echo "#__DOMAIN__$1" >>$KEY_TABLE
-        echo "default._domainkey.$1     $1:default:$KEYS_PATH$1/default.private" >>$KEY_TABLE
+        echo "mail._domainkey.$1     $1:mail:$KEYS_PATH$1/mail.private" >>$KEY_TABLE
         echo "" >>$KEY_TABLE
     else
         echo "Error, the domain $1 already exists in key.table"
@@ -54,13 +54,13 @@ if [ $1 ]; then
 
         mkdir -p "${KEYS_PATH}${1}"
 
-        opendkim-genkey -b 2048 -d $1 -D "${KEYS_PATH}${1}" -s default -v
+        opendkim-genkey -b 2048 -d $1 -D "${KEYS_PATH}${1}" -s mail -v
 
-        chown opendkim:opendkim "${KEYS_PATH}${1}/default.private"
-        chmod 600 "${KEYS_PATH}${1}/default.private"
-        chmod 777 "${KEYS_PATH}${1}/default.txt"
+        chown opendkim:opendkim "${KEYS_PATH}${1}/mail.private"
+        chmod 600 "${KEYS_PATH}${1}/mail.private"
+        chmod 777 "${KEYS_PATH}${1}/mail.txt"
 
-        cat "${KEYS_PATH}${1}/default.txt"
+        cat "${KEYS_PATH}${1}/mail.txt"
     else
         echo "Error, domain key dkim $1 could not be created"
     fi

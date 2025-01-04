@@ -27,13 +27,13 @@ if [ $1 ]; then
     then
         echo "Error, one or more domains are missing in the configuration"
     else
-        opendkim-genkey -b 2048 -d $1 -D "${KEYS_PATH}${1}" -s default -v
+        opendkim-genkey -b 2048 -d $1 -D "${KEYS_PATH}${1}" -s mail -v
 
-        chown opendkim:opendkim "${KEYS_PATH}${1}/default.private"
-        chmod 600 "${KEYS_PATH}${1}/default.private"
-        chmod 777 "${KEYS_PATH}${1}/default.txt"
+        chown opendkim:opendkim "${KEYS_PATH}${1}/mail.private"
+        chmod 600 "${KEYS_PATH}${1}/mail.private"
+        chmod 777 "${KEYS_PATH}${1}/mail.txt"
 
-        cat "${KEYS_PATH}${1}/default.txt"
+        cat "${KEYS_PATH}${1}/mail.txt"
     fi
 
 else

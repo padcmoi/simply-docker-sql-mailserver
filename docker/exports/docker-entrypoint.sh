@@ -76,11 +76,14 @@ if [ ! -f /.package-installed ]; then
     # SPF / OpenDKIM
     # Inspired by this tutorial https://www.linuxbabe.com/mail-server/spf-dkim-postfix-debian-server
     apt -y install postfix-policyd-spf-python opendkim opendkim-tools
+    service opendkim stop
+    killall opendkim
     sudo gpasswd -a postfix opendkim
     cp -f /opt/conf/opendkim/opendkim.conf /etc/
     mkdir -p /etc/opendkim/keys
     chown -R opendkim:opendkim /etc/opendkim
     chmod go-rw /etc/opendkim/keys
+    chmod 600 /etc/opendkim/keys/*/mail.private
     [ ! -f /etc/opendkim/signing.table ] && touch /etc/opendkim/signing.table
     [ ! -f /etc/opendkim/key.table ] && touch /etc/opendkim/key.table
     if [ ! -f /etc/opendkim/trusted.hosts ]; then
@@ -171,8 +174,8 @@ service mariadb restart
 service redis-server restart
 service rspamd restart
 service dovecot restart
-service opendkim restart
 service postfix restart
+service opendkim restart
 service apache2 restart
 
 echo "Configuration rspam: $(rspamadm configtest)"
@@ -199,18 +202,19 @@ touch /.package-installed
 # /etc/init.d/./apache2 start
 
 # # case api
-mv /opt/source/api /opt/api
-cd /opt/api
-cp .env.sample .env
-pnpm install
-pnpm run build
-node dist/main </dev/null &>/dev/null &
+# mv /opt/source/api /opt/api
+# cd /opt/api
+# cp .env.sample .env
+# pnpm install
+# pnpm run build
+# node dist/main </dev/null &>/dev/null &
 ## NodeJS API
 ## check package to encrypt mail password
 # https://github.com/mvo5/sha512crypt-node
 # https://stackoverflow.com/questions/37732331/execute-bash-command-in-node-js-and-get-exit-code
 
 clear
+service opendkim status
 netstat -tulpn | grep -E -w 'tcp|udp'
 echo "Hostname: ${DOMAIN_FQDN} (${ADRESSIP})"
 echo "MYSQL ROOT PASSWORD: ${MYSQL_ROOT_PASSWORD}"
