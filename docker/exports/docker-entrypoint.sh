@@ -92,6 +92,8 @@ if [ ! -f /.package-installed ]; then
     # - opendkim-create.sh <domain>
     # - opendkim-delete.sh <domain>
     # - opendkim-update.sh <domain> # just update private key
+    [ ! -d /var/spool/postfix/opendkim ] && mkdir -p /var/spool/postfix/opendkim
+    chown opendkim:postfix /var/spool/postfix/opendkim
 
     # dovecot changes
     mkdir -p /var/mail/vhosts/
@@ -156,6 +158,11 @@ if [ ! -f /.package-installed ]; then
     a2ensite port.4002.conf
 fi
 
+# replace default conf
+if [ ! -f /.package-installed ]; then
+    cp -R -f /opt/conf/default/* /etc/default/
+fi
+
 # start services
 service rsyslog restart
 service cron restart
@@ -164,6 +171,7 @@ service mariadb restart
 service redis-server restart
 service rspamd restart
 service dovecot restart
+service opendkim restart
 service postfix restart
 service apache2 restart
 
