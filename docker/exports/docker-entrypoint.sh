@@ -81,9 +81,17 @@ if [ ! -f /.package-installed ]; then
     mkdir -p /etc/opendkim/keys
     chown -R opendkim:opendkim /etc/opendkim
     chmod go-rw /etc/opendkim/keys
+    [ ! -f /etc/opendkim/signing.table ] && touch /etc/opendkim/signing.table
+    [ ! -f /etc/opendkim/key.table ] && touch /etc/opendkim/key.table
+    if [ ! -f /etc/opendkim/trusted.hosts ]; then
+        echo "127.0.0.1" >>/etc/opendkim/trusted.hosts
+        echo "localhost" >>/etc/opendkim/trusted.hosts
+        echo "" >>/etc/opendkim/trusted.hosts
+    fi
     # the API must use these scripts when creating or deleting the domain
     # - opendkim-create.sh <domain>
     # - opendkim-delete.sh <domain>
+    # - opendkim-update.sh <domain> # just update private key
 
     # dovecot changes
     mkdir -p /var/mail/vhosts/
