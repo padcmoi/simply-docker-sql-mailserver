@@ -147,7 +147,7 @@ postscreen_bare_newline_enable = ____postscreenDeepProtocolTests
 postscreen_bare_newline_action = enforce
 
 # Applications Milter (RSPAMD, ...) + OpenDKIM
-smtpd_milters = inet:127.0.0.1:11332, inet:localhost:12301
+smtpd_milters = inet:127.0.0.1:11332, inet:127.0.0.1:12301
 non_smtpd_milters = $smtpd_milters
 milter_protocol = 6
 milter_default_action = accept
