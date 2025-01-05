@@ -169,6 +169,7 @@ fi
 # start services
 service rsyslog restart
 service cron restart
+service clamav-daemon restart
 handle-antivirus.sh </dev/null &>/dev/null &
 service mariadb restart
 service redis-server restart
