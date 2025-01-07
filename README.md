@@ -43,7 +43,7 @@ Through this project I'd like to apply what I've learned in my lessons on the [D
 - [ ] [OpenDMARC](https://github.com/trusteddomainproject/OpenDMARC)
 - [ ] [Fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page)
 - [x] [Postscreen](http://www.postfix.org/POSTSCREEN_README.html)
-- [ ] [Postgrey](https://postgrey.schweikert.ch/)
+- [x] [Postgrey](https://postgrey.schweikert.ch/)
 - [ ] ~~[Fetchmail](http://www.fetchmail.info/fetchmail-man.html)~~
 - [x] [Roundcube](https://docs.roundcube.net/doc/help/1.1/fr_FR/)
 - [x] SSL certificate to be updated on host, letsencrypt compatible, but server doesn't have port 80 to update itself
