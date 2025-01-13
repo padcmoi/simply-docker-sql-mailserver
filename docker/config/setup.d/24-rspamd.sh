@@ -47,6 +47,14 @@ container)
     rm -f /var/lib/rspamd/*.map
 
     ;;
+
+run)
+
+    service rspamd start </dev/null &>/dev/null
+    nn rspamd
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

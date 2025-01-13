@@ -35,6 +35,14 @@ container)
     #
 
     ;;
+
+run)
+
+    service apache2 start </dev/null &>/dev/null
+    nn apache2
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

@@ -54,6 +54,14 @@ container)
     chown -R vmail:vmail /var/mail
 
     ;;
+
+run)
+
+    service dovecot start </dev/null &>/dev/null
+    nn dovecot
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

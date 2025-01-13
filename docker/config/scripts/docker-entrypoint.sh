@@ -5,19 +5,6 @@ source /.mysql-root-pw
 
 /docker-config/docker-setup.sh container
 
-# start services
-service rspamd restart
-service rsyslog restart
-service cron restart
-service mariadb restart
-service redis-server restart
-handle-antivirus.sh </dev/null &>/dev/null &
-opendkim -x $OPENDKIM_CONFIG
-service dovecot restart
-service postfix restart
-service apache2 restart
-service fail2ban start
-
 # exec some scripts ...
 ## check in background changes in ssl certs /etc/_private/fullchain.*
 check-mail-ssl-files.sh </dev/null &>/dev/null &
@@ -27,10 +14,9 @@ debug-autocopy-logs.sh </dev/null &>/dev/null &
 make-public-mail-volume.sh </dev/null &>/dev/null &
 
 # fix permission issue opendkim keys
-/docker-config/setup.d/26-opendkim.sh container
+/docker-config/setup.d/26-opendkim.sh container </dev/null &>/dev/null &
 
-netstat -tulpn | grep -E -w 'tcp|udp'
-service fail2ban status
+# netstat -tulpn | grep -E -w 'tcp|udp'
 [ $DISABLE_ANTIVIRUS == true ] && echo "ANTIVIRUS CLAMAV DISABLED !!!"
 [ ! $DISABLE_ANTIVIRUS == true ] && echo "ANTIVIRUS CLAMAV ENABLED !!!"
 if [ ! $NOTIFY_SPAM_REJECT == false ] && [ $NOTIFY_SPAM_REJECT_TO ]; then

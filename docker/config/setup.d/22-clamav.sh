@@ -35,6 +35,14 @@ container)
 
     #
     ;;
+
+run)
+
+    handle-antivirus.sh </dev/null &>/dev/null &
+    ps aux | grep -E '/usr/sbin/clamd' | sed '/grep -E \/usr\/sbin\/clamd/d'
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

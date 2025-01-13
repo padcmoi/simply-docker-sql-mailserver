@@ -59,6 +59,15 @@ container)
     fi
 
     ;;
+
+run)
+
+    service postfix start </dev/null &>/dev/null
+    sleep 2
+    nn '25|465|587'
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

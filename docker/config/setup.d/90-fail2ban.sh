@@ -51,7 +51,24 @@ retrieve-volume)
 
     ;;
 
-container) ;;
+container)
+
+    # To avoid fail2ban crashing if these logs dont exist
+    touch /var/log/dovecot.log && chmod 777 /var/log/dovecot.log
+    touch /var/log/postfix.log && chmod 777 /var/log/postfix.log
+    mkdir -p /var/log/apache2/
+    touch /var/log/apache2/error.log && chmod 777 /var/log/apache2/error.log
+    touch /var/log/apache2/access.log && chmod 777 /var/log/apache2/access.log
+
+    ;;
+
+run)
+
+    service fail2ban start </dev/null &>/dev/null
+    systemctl status fail2ban | grep 'Active' | sed 's/Active: //'
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

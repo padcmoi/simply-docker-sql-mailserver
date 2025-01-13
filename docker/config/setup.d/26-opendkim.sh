@@ -74,6 +74,14 @@ container)
     chown -R $OPENDKIM_OWNER_FILE $OPENDKIM_KEYS_PATH/*/*.private_key
 
     ;;
+
+run)
+
+    systemctl start opendkim && service opendkim status
+    nn opendkim
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;

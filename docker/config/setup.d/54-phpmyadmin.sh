@@ -42,6 +42,13 @@ container)
     #
 
     ;;
+
+run)
+
+    nn 4002
+
+    ;;
+
 *)
     echo "please give me an argument"
     ;;
